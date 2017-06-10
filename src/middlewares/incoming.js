@@ -12,7 +12,7 @@ import { MIDDLEWARE_PRIORITY as PRIORITY } from '../util/constants';
 export const schemaUseIncoming = Joi.object().keys({
 	name: Joi.string().required(),
 	handler: Joi.func().required(),
-	enable: Joi.boolean().default(true),
+	enabled: Joi.boolean().default(true),
 	type: Joi.string().default('handler'),
 	priority: Joi.number().default(PRIORITY.DEFAULT),
 	description: Joi.string().default('No description')
@@ -60,7 +60,7 @@ export class IncomingMiddleware {
 
 		this._stack.push(middleware);
 
-		if (middleware.enable) {
+		if (middleware.enabled) {
 			/* Resorting  with the new middleware */
 			this.sort();
 		}
@@ -146,7 +146,7 @@ export class IncomingMiddleware {
 	reload () {
 		const middlewares = this._stack
 		.filter((middleware) => (
-			middleware.enable
+			middleware.enabled
 		))
 		.map((middleware) => (
 			middleware.handler

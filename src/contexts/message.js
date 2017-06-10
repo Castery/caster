@@ -11,7 +11,8 @@ export const messageSchema = incomingSchema.keys({
 		id: Joi.any().required(),
 		type: Joi.string().required()
 	}),
-	text: Joi.string().required().allow(null)
+	text: Joi.string().required().allow(null),
+	attachments: Joi.array().allow()
 });
 
 /**
@@ -44,10 +45,11 @@ export class MessageContext extends IncomingContext {
 	 *
 	 * @return {string}
 	 */
-	inspect () {
+	inspect (depth, options) {
 		const out = {};
 
 		for (const key of Object.keys(this)) {
+			/* Ignores private properties */
 			if (key.startsWith('_')) {
 				continue;
 			}

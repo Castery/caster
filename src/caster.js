@@ -6,12 +6,14 @@ import createDebug from 'debug';
 import { validate as joiValidate } from 'joi';
 
 import { Platform } from './platform';
+import { Hears } from './middlewares/hears';
 import { IncomingMiddleware } from './middlewares/incoming';
 import { OutcomingMiddleware } from './middlewares/outcoming';
 
 import {
 	defaultOptions,
-	defaultOptionsSchema
+	defaultOptionsSchema,
+	MIDDLEWARE_PRIORITY as PRIORITY
 } from './util/constants';
 
 const debug = createDebug('caster');
@@ -31,12 +33,21 @@ export class Caster {
 		this.options = Object.assign({}, defaultOptions);
 
 		this._isStarted = false;
+		this._hears = new Hears;
 		this._platforms = new Set;
 
 		this.incoming = new IncomingMiddleware;
 		this.outcoming = new OutcomingMiddleware;
 
 		this.setOptions(options);
+
+		/* Register default hear */
+		this.incoming.use({
+			name: 'hear',
+			priority: PRIORITY.DEFAULT,
+			handler: this._hears.getMiddleware(),
+			description: 'The built-in hear convenience middleware'
+		});
 	}
 
 	/**
@@ -116,6 +127,20 @@ export class Caster {
 		}
 
 		return;
+	}
+
+	/**
+	 * Register hear middleware
+	 *
+	 * @param {mixed}    conditions
+	 * @param {Function} handler
+	 *
+	 * @return {this}
+	 */
+	hear (conditions, handler) {
+		this._hears.use(conditions, handler);
+
+		return this;
 	}
 
 	/**
