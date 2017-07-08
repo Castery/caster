@@ -71,7 +71,7 @@ export class Middleware {
 
 			try {
 				return Promise.resolve(
-					middlewares[i](...args, () =>  next(i + 1))
+					middlewares[i](...args, () => next(i + 1))
 				)
 				.then(() => {
 					status.isFinished = middlewares.length <= index;
@@ -95,3 +95,11 @@ export class Middleware {
 		return `${this.constructor.name} { ${inspect(this._stack, options)} }`;
 	}
 }
+
+caster.on('error', (error) => {
+	for (const { instance, handler } of errors) {
+		if (error instanceof instance) {
+			handler(error);
+		}
+	}
+});

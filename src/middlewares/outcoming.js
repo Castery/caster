@@ -82,6 +82,7 @@ export class OutcomingMiddleware extends IncomingMiddleware {
 		const name = `outcoming-${platform.getPlatformName()}-${generateUUID()}`;
 
 		this._platforms.set(platform, name);
+
 		return this.use({
 			name,
 			handler,

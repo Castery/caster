@@ -1,6 +1,6 @@
 {
     "name": "@castery/caster",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "description": "🤖💬 Universal platform for creating multi bots!",
     "main": "index.js",
     "engines": {
@@ -39,7 +39,6 @@
         "mocha": "^3.4.2"
     },
     "dependencies": {
-        "@castery/caster": "^0.0.9",
         "bluebird": "^3.5.0",
         "debug": "^2.6.8",
         "joi": "^10.6.0",

@@ -8,7 +8,8 @@ import Joi from 'joi';
  * @type {Object}
  */
 export const MIDDLEWARE_PRIORITY = {
-	DEFAULT: 0,
+	HEAR: 20,
+	DEFAULT: 10,
 	PLATFORM: 200
 };
 

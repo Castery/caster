@@ -44,7 +44,7 @@ export class Caster {
 		/* Register default hear */
 		this.incoming.use({
 			name: 'hear',
-			priority: PRIORITY.DEFAULT,
+			priority: PRIORITY.HEAR,
 			handler: this._hears.getMiddleware(),
 			description: 'The built-in hear convenience middleware'
 		});
