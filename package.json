@@ -1,10 +1,10 @@
 {
     "name": "@castery/caster",
     "version": "0.0.9",
-    "description": "🤖💬 Universal pla 1tform for creating multi bots!",
+    "description": "🤖💬 Universal platform for creating multi bots!",
     "main": "index.js",
     "engines": {
-        "node": ">=7.0.0"
+        "node": ">=8.0.0"
     },
     "scripts": {
         "test": "mocha lib/test",
@@ -32,16 +32,17 @@
     "homepage": "https://github.com/castery/caster#readme",
     "devDependencies": {
         "babel-cli": "^6.24.1",
-        "babel-core": "^6.24.1",
-        "babel-preset-env": "^1.5.1",
+        "babel-core": "^6.25.0",
+        "babel-plugin-transform-object-rest-spread": "^6.23.0",
+        "babel-preset-env": "^1.6.0",
         "chai": "^4.0.2",
         "mocha": "^3.4.2"
     },
     "dependencies": {
-        "@castery/caster": "^0.0.8",
+        "@castery/caster": "^0.0.9",
         "bluebird": "^3.5.0",
         "debug": "^2.6.8",
-        "joi": "^10.5.2",
-        "uuid": "^3.0.1"
+        "joi": "^10.6.0",
+        "uuid": "^3.1.0"
     }
 }
