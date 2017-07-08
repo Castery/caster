@@ -95,11 +95,3 @@ export class Middleware {
 		return `${this.constructor.name} { ${inspect(this._stack, options)} }`;
 	}
 }
-
-caster.on('error', (error) => {
-	for (const { instance, handler } of errors) {
-		if (error instanceof instance) {
-			handler(error);
-		}
-	}
-});
