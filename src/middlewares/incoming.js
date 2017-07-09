@@ -18,6 +18,11 @@ export const schemaUseIncoming = Joi.object().keys({
 	description: Joi.string().default('No description')
 });
 
+/**
+ * Incomings middleware
+ *
+ * @public
+ */
 export class IncomingMiddleware {
 	/**
 	 * Constructor
@@ -31,7 +36,7 @@ export class IncomingMiddleware {
 	/**
 	 * Returns the schema use
 	 *
-	 * @return {Joi}
+	 * @return {JoiSchemaObject}
 	 */
 	getSchemaUse () {
 		return schemaUseIncoming;

@@ -11,6 +11,10 @@ export const messageSchema = incomingSchema.keys({
 		id: Joi.any().required(),
 		type: Joi.string().required()
 	}),
+	to: Joi.object().keys({
+		id: Joi.any().required(),
+		type: Joi.string().required()
+	}),
 	text: Joi.string().required().allow(null),
 	attachments: Joi.array().allow()
 });

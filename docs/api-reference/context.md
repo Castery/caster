@@ -16,6 +16,20 @@ new Context(caster);
 |--------|--------|-----------------|
 | caster | Caster | Instance Caster |
 
+### getCaster
+Returns instance caster
+
+```js
+context.getCaster(); // => Caster
+```
+
+### getSchema
+Returns joi schema
+
+```js
+context.getSchema(); // => JoiSchemaObject
+```
+
 ## Variables default
 The default define variables
 

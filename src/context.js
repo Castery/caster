@@ -33,7 +33,7 @@ export class Context {
 	/**
 	 * Returns the schema validation
 	 *
-	 * @return {Joi}
+	 * @return {JoiSchemaObject}
 	 */
 	getSchema () {
 		return contextSchema;

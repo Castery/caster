@@ -39,7 +39,7 @@ middleware.use(...middlewares); // => void
 Run chain a middleware.
 
 ```js
-middleware.run(context); // => Promise<boolean>
+middleware.run(context); // => Promise<Object>
 ```
 
 | Param   | Type  | Description |
@@ -47,14 +47,18 @@ middleware.run(context); // => Promise<boolean>
 | context | mixed | Context     |
 
 ```js
-middleware.run(...args); // => Promise<boolean>
+middleware.run(...args); // => Promise<Object>
 ```
 
 | Param | Type  | Description |
 |-------|-------|-------------|
 | args  | array | Contexts    |
 
-Promise returns boolean, passed through all middleware
+Promise returns object
+
+| Options    | Type    | Description                   |
+|------------|---------|-------------------------------|
+| isFinished | boolean | Passed through all middleware |
 
 ## Usage
 ```js
@@ -78,7 +82,7 @@ const context = {};
 
 middleware.run(context)
 .then((condition) => {
-	console.log('Passed on all middleware:', condition? 'yes': 'no');
+	console.log('Passed on all middleware:', condition.isFinished? 'yes': 'no');
 	console.log('Context', context);
 })
 ```

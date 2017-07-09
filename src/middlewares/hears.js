@@ -1,8 +1,6 @@
 'use strict';
 
 import { Middleware } from '../middleware';
-import { MIDDLEWARE_PRIORITY as PRIORITY } from '../util/constants';
-
 import { getObjectPath } from './helpers';
 
 /**
@@ -27,7 +25,7 @@ export class Hears {
 	 * @return {this}
 	 */
 	use (conditions, handler) {
-		if (typeof conditions !== 'object' || conditions instanceof RegExp) {
+		if (typeof conditions !== 'object' || conditions instanceof RegExp || Array.isArray(conditions)) {
 			conditions = { text: conditions };
 		}
 

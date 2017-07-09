@@ -12,7 +12,7 @@ The default define variables
 
 | Option     | Type    | Value | Description                   |
 |------------|---------|-------|-------------------------------|
-| options    | object  | {}    | Options platform              |
+| options    | Object  | {}    | Options platform              |
 | _isStarted | boolean | false | Launch status of the platform |
 
 ### setOptions
@@ -24,7 +24,7 @@ platform.setOptions(options); // => Caster
 
 | Param   | Type   | Description      |
 |---------|--------|------------------|
-| options | object | Options platform |
+| options | Object | Options platform |
 
 ### getOptions
 Returns options
@@ -65,14 +65,21 @@ platform.stop(); // => Promise<void>
 Subscribe caster for platform events
 
 ```js
-platform.subscribe(caster);
+platform.subscribe(caster); // => Promise<void>
 ```
 
 ### unsubscribe
 Unsubscribe caster for platform events
 
 ```js
-platform.unsubscribe(caster);
+platform.unsubscribe(caster); // => Promise<void>
+```
+
+### getAdapter
+Returns used platform adapter
+
+```js
+platform.getAdapter(); // => Object
 ```
 
 ## Usage
@@ -102,6 +109,14 @@ class MySimplePlatform extends Platform {
 		// Stop
 
 		this._isStarted = false;
+	}
+
+	async subscribe (caster) {
+		// Adds caster subscribe
+	}
+
+	async unsubscribe (caster) {
+		// Removes caster subscribe
 	}
 }
 ```

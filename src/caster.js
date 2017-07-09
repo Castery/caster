@@ -164,15 +164,23 @@ export class Caster {
 	/**
 	 * Extends the functionality of caster
 	 *
-	 * @param {Object} proto
+	 * @param {Object} Proto
+	 * @param {Object} options
 	 */
-	use (proto) {
-		if (proto instanceof Platform) {
-			return void this.addPlatform(proto);
+	use (Proto, options = {}) {
+		/* Hack to dev */
+		if ('start' in Proto && 'getPlatformName' in Proto) {
+			return void this.addPlatform(Proto);
 		}
 
-		if ('name' in proto && 'handler' in proto) {
-			this.incoming.use(proto);
+		if (Proto instanceof Platform) {
+			return void this.addPlatform(Proto);
+		} else if (Proto.prototype instanceof Platform) {
+			return void this.addPlatform(new Proto(options));
+		}
+
+		if ('name' in Proto && 'handler' in Proto) {
+			this.incoming.use(Proto);
 
 			return;
 		}
@@ -199,7 +207,7 @@ export class Caster {
 	/**
 	 * Dispatching outcoming middleware
 	 *
-	 * @param  {OutcomingContext} context
+	 * @param  {IncomingContext} context
 	 *
 	 * @return {Promise<boolean>}
 	 */

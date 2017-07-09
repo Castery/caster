@@ -6,7 +6,7 @@ import { MessageContext } from '@castery/caster';
 ```
 
 ### Constructor
-Initialize new Incoming Message Context
+Initialize new Incoming Message Context extends IncomingContext
 
 ```js
 new MessageContext(caster);
@@ -16,16 +16,24 @@ new MessageContext(caster);
 |--------|--------|-----------------|
 | caster | Caster | Instance Caster |
 
+### getText
+Returns text
+
+```js
+context.getText(); // => ?string
+```
+
 ## Variables default
 The default define variables
 
-| Option   | Type   | Value   | Description            |
-|----------|--------|---------|------------------------|
-| caster   | Caster | Caster  | Instance Caster        |
-| platform | string | unknown | Name platform incoming |
-| type     | string | message | Type event             |
-| text     | string | null    | Text message           |
-| raw      | object | null    | Original event         |
+| Option      | Type   | Value      | Description     |
+|-------------|--------|------------|-----------------|
+| caster      | Caster | Caster     | Instance Caster |
+| from        | Object | {id, type} | Inbox from      |
+| to          | Object | {id, type} | Outbox to       |
+| type        | string | message    | Type event      |
+| text        | string | null       | Text message    |
+| attachments | Array  | null       | Text message    |
 
 ## Creating your own context
 Simple context
@@ -34,7 +42,10 @@ class MyMessageContext extends MessageContext {
 	constructor (caster, raw) {
 		super(caster);
 
-		this.platform = 'my-platform';
+		this.platform = {
+			id: <id>,
+			name: 'my-platform'
+		};
 		this.text = raw.text;
 		this.raw = raw;
 	}

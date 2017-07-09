@@ -14,7 +14,7 @@ new Caster([options]);
 
 | Param   | Type   | Description                 |
 |---------|--------|-----------------------------|
-| options | object | [Options bot](#options-bot) |
+| options | Object | [Options bot](#options-bot) |
 
 #### Options bot
 
@@ -31,7 +31,7 @@ caster.setOptions(options); // => Caster
 
 | Param   | Type   | Description                 |
 |---------|--------|-----------------------------|
-| options | object | [Options bot](#options-bot) |
+| options | Object | [Options bot](#options-bot) |
 
 ### isStarted
 Returns the launch status of the bot
@@ -58,5 +58,74 @@ caster.stop(); // => Promise<void>
 Adds the functionality of caster
 
 ```js
-caster.use(<Platform>);
+caster.use(platform); // => this
 ```
+
+| Param    | Type     | Description          |
+|----------|----------|----------------------|
+| platform | Platform | Integration platform |
+
+```js
+caster.use(Platform, options); // => this
+```
+
+| Param    | Type     | Description          |
+|----------|----------|----------------------|
+| Platform | Platform | Integration platform |
+| options  | Object   | Options a platform   |
+
+### hear
+Hear convenience, read [hears.use](hears.md#use)
+
+```js
+caster.hear(conditions, handler); // => this
+```
+
+| Param      | Type     | Description        |
+|------------|----------|--------------------|
+| conditions | mixed    | Сonditions         |
+| handler    | function | Middleware handler |
+
+### addPlatform
+Adds a platform
+
+```js
+caster.addPlatform(platform); // => void
+```
+
+| Param    | Type     | Description          |
+|----------|----------|----------------------|
+| platform | Platform | Integration platform |
+
+### removePlatform
+Removes a platform
+
+```js
+caster.removePlatform(platform); // => void
+```
+
+| Param    | Type     | Description          |
+|----------|----------|----------------------|
+| platform | Platform | Integration platform |
+
+### dispatchIncoming
+Dispatching incoming middleware
+
+```js
+caster.dispatchIncoming(context); // => Promise<Object>
+```
+
+| Param   | Type            | Description      |
+|---------|-----------------|------------------|
+| context | IncomingContext | Incoming context |
+
+### dispatchOutcoming
+Dispatching outcoming middleware
+
+```js
+caster.dispatchOutcoming(context); // => Promise<Object>
+```
+
+| Param   | Type            | Description      |
+|---------|-----------------|------------------|
+| context | IncomingContext | Incoming context |

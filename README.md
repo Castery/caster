@@ -14,14 +14,17 @@
 - Using modern development tools
 
 ## Installation
-**[Node.js](https://nodejs.org/) 7.0.0 or newer is required**  
+**[Node.js](https://nodejs.org/) 8.0.0 or newer is required**  
+
+### Yarn
+Recommended, auto assembly
+```shell
+yarn add @castery/caster
+```
+
 ### NPM
 ```shell
 npm install @castery/caster --save
-```
-### Yarn
-```shell
-yarn add @castery/caster
 ```
 
 ## Usage
