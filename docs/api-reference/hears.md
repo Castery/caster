@@ -19,10 +19,10 @@ Register listen condition
 hears.use(condition, handler); // => this
 ```
 
-| Param     | Type                   | Description         |
-|-----------|------------------------|---------------------|
-| condition | string | Array<string> | Condition triggered |
-| handler   | function               | Middleware handler  |
+| Param     | Type              | Description         |
+|-----------|-------------------|---------------------|
+| condition | string | string[] | Condition triggered |
+| handler   | function          | Middleware handler  |
 
 ```js
 hears.use(conditions, handler); // => this
