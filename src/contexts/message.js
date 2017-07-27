@@ -1,22 +1,19 @@
 'use strict';
 
-import { inspect } from 'util';
-
 import Joi from 'joi';
 
+import { inspect } from 'util';
+
 import { IncomingContext, incomingSchema } from './incoming';
+import { CONTEXT_PROPS, defaultSupportedAttachmentTypes } from '../util/constants';
+
+const { SUPPORTED_ATTACHMENT_TYPES } = CONTEXT_PROPS;
 
 export const messageSchema = incomingSchema.keys({
-	from: Joi.object().keys({
-		id: Joi.any().required(),
-		type: Joi.string().required()
-	}),
-	to: Joi.object().keys({
-		id: Joi.any().required(),
-		type: Joi.string().required()
-	}),
-	text: Joi.string().required().allow(null),
-	attachments: Joi.array().allow()
+	[SUPPORTED_ATTACHMENT_TYPES]: Joi.object(),
+
+	attachments: Joi.array().allow(),
+	text: Joi.string().required().allow(null)
 });
 
 /**
@@ -33,6 +30,37 @@ export class MessageContext extends IncomingContext {
 
 		this.type = 'message';
 		this.text = null;
+	}
+
+	/**
+	 * Returns supported platform attachment types
+	 *
+	 * @param {Object} attachments
+	 *
+	 * @return {Object}
+	 */
+	static defaultSupportedAttachmentTypes (types) {
+		return {
+			...defaultSupportedAttachmentTypes,
+			...types
+		};
+	}
+
+	/**
+	 * Checks for platform attachment type support
+	 *
+	 * @param {string} name
+	 *
+	 * @return {?boolean}
+	 */
+	hasSupportedAttachment (name) {
+		const types = this[SUPPORTED_ATTACHMENT_TYPES];
+
+		if (!Boolean(types) || !(name in types)) {
+			return null;
+		}
+
+		return types[name];
 	}
 
 	/**

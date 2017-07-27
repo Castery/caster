@@ -14,6 +14,16 @@ export const MIDDLEWARE_PRIORITY = {
 };
 
 /**
+ * Private context props
+ *
+ * @type {Object}
+ */
+export const CONTEXT_PROPS = {
+	SUPPORTED_CONTEXT_TYPES: Symbol('SupportedContextTypes'),
+	SUPPORTED_ATTACHMENT_TYPES: Symbol('SupportedAttachmentTypes')
+};
+
+/**
  * Default options bot
  *
  * @type {Object}
@@ -22,6 +32,25 @@ export const MIDDLEWARE_PRIORITY = {
  */
 export const defaultOptions = {
 	//
+};
+
+/**
+ * Default supported platform  types
+ *
+ * @type {Object}
+ */
+export const defaultSupportedContextTypes = {
+	message: false
+};
+
+/**
+ * Default supported platform attachments
+ *
+ * @type {Object}
+ */
+export const defaultSupportedAttachmentTypes = {
+	image: false,
+	video: false
 };
 
 /**
