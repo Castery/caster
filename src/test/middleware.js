@@ -120,6 +120,14 @@ describe('Caster Middleware', () => {
 
 		middleware.use(async (ctx, next) => {
 			await next();
+		});
+
+		middleware.use(async (ctx, next) => {
+			await next();
+			await next();
+		});
+
+		middleware.use(async (ctx, next) => {
 			await next();
 		});
 
