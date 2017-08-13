@@ -56,9 +56,9 @@ export class Middleware {
 			contexts: args
 		};
 
-		const next = (i) => {
+		const next = async (i) => {
 			if (i <= index) {
-				return Promise.reject(new Error('next() called multiple times'));
+				throw new Error('next() called multiple times');
 			}
 
 			index = i;
@@ -66,21 +66,14 @@ export class Middleware {
 			if (!(i in middlewares)) {
 				status.isFinished = true;
 
-				return Promise.resolve(status);
+				return status;
 			}
 
-			try {
-				return Promise.resolve(
-					middlewares[i](...args, () => next(i + 1))
-				)
-				.then(() => {
-					status.isFinished = middlewares.length <= index;
+			await middlewares[i](...args, () => next(i + 1));
 
-					return status;
-				});
-			} catch (error) {
-				return Promise.reject(error);
-			}
+			status.isFinished = middlewares.length <= index;
+
+			return status;
 		};
 
 		return next(0);
