@@ -91,6 +91,10 @@ export class MessageContext extends IncomingContext {
 
 		delete out.caster;
 
-		return this.constructor.name + ' ' + inspect(out);
+		if (out.raw !== null) {
+			out.raw = '<raw event>';
+		}
+
+		return this.constructor.name + ' ' + inspect(out, options);
 	}
 }

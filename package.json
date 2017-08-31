@@ -1,6 +1,6 @@
 {
     "name": "@castery/caster",
-    "version": "0.0.11",
+    "version": "0.0.12",
     "description": "🤖💬 Universal platform for creating multi bots!",
     "main": "index.js",
     "engines": {
@@ -11,7 +11,7 @@
         "build": "npm run-script babel",
         "babel": "babel ./src/ --out-dir ./lib/",
         "watch": "npm run-script babel -- --watch",
-		"bench": "matcha lib/test/bench/middleware.js",
+        "bench": "matcha lib/test/bench/middleware.js",
         "prepare": "npm run-script babel && npm run-script test"
     },
     "repository": {
@@ -32,9 +32,9 @@
     },
     "homepage": "https://github.com/castery/caster#readme",
     "devDependencies": {
-        "babel-cli": "^6.24.1",
-        "babel-core": "^6.25.0",
-        "babel-plugin-transform-object-rest-spread": "^6.23.0",
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.0",
+        "babel-plugin-transform-object-rest-spread": "^6.26.0",
         "babel-preset-env": "^1.6.0",
         "chai": "^4.1.1",
         "matcha": "^0.7.0",
@@ -42,7 +42,8 @@
     },
     "dependencies": {
         "bluebird": "^3.5.0",
-        "debug": "^3.0.0",
+        "chalk": "^2.1.0",
+        "debug": "^3.0.1",
         "joi": "^10.6.0",
         "uuid": "^3.1.0"
     }
