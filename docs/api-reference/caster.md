@@ -44,14 +44,14 @@ caster.isStarted(); // => boolean
 Running the bot
 
 ```js
-caster.start(); // => Promise<void>
+caster.start(); // => Promise
 ```
 
 ### stop
 Stops the bot
 
 ```js
-caster.stop(); // => Promise<void>
+caster.stop(); // => Promise
 ```
 
 ### use

@@ -1,23 +1,24 @@
-'use strict';
+import Caster from './caster';
+import Context from './context';
+import Platform from './platform';
+import Middleware from './middleware';
+import Hears from './middlewares/hears';
+import Collection from './util/collection';
+import MessageContext from './contexts/message';
+import IncomingContext from './contexts/incoming';
 
-import * as errors from './errors';
+export {
+	Hears,
+	Caster,
+	Context,
+	Platform,
+	Collection,
+	Middleware,
+	MessageContext,
+	IncomingContext
+};
 
-export { errors };
-
-export { Caster } from './caster';
-
-export { Context } from './context';
-
-export { Platform } from './platform';
-
-export { Middleware } from './middleware';
-
-export { Hears } from './middlewares/hears';
-
-export { Collection } from './util/collection';
-
-export { MessageContext } from './contexts/message';
-
-export { IncomingContext } from './contexts/incoming';
-
+export * from './errors';
 export { MIDDLEWARE_PRIORITY, CONTEXT_PROPS } from './util/constants';
+
+export default Caster;

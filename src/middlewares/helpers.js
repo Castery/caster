@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Object order sorting
  *

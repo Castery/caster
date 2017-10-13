@@ -1,9 +1,7 @@
-'use strict';
-
 import Joi from 'joi';
 import generateUUID from 'uuid';
 
-import { IncomingMiddleware, schemaUseIncoming } from './incoming';
+import IncomingMiddleware, { schemaUseIncoming } from './incoming';
 import { MIDDLEWARE_PRIORITY as PRIORITY } from '../util/constants';
 
 // export const schemaUseOutcoming = schemaUseIncoming.keys({
@@ -16,34 +14,34 @@ export const schemaUseOutcoming = schemaUseIncoming;
  *
  * @public
  */
-export class OutcomingMiddleware extends IncomingMiddleware {
+export default class OutcomingMiddleware extends IncomingMiddleware {
 	/**
 	 * Constructor
 	 */
-	constructor () {
+	constructor() {
 		super();
 
-		this._platforms = new Map;
+		this.platforms = new Map();
 	}
 
 	/**
 	 * @inheritdoc
 	 */
-	forEach (fn) {
+	forEach(fn) {
 		return super.forEach((value, key, arr) => {
 			/* Ignores platforms */
 			if (value.type === 'platform') {
 				return;
 			}
 
-			return fn(value, key, arr);
+			fn(value, key, arr);
 		});
 	}
 
 	/**
 	 * @inheritdoc
 	 */
-	find (fn) {
+	find(fn) {
 		return super.find((value, key, arr) => {
 			/* Ignores platforms */
 			if (value.type === 'platform') {
@@ -57,7 +55,7 @@ export class OutcomingMiddleware extends IncomingMiddleware {
 	/**
 	 * @inheritdoc
 	 */
-	filter (fn) {
+	filter(fn) {
 		return super.filter((value, key, arr) => {
 			/* Ignores platforms */
 			if (value.type === 'platform') {
@@ -74,14 +72,14 @@ export class OutcomingMiddleware extends IncomingMiddleware {
 	 * @param {Platform} platform
 	 * @param {Function} handler
 	 */
-	addPlatform (platform, handler) {
-		if (this._platforms.has(platform)) {
+	addPlatform(platform, handler) {
+		if (this.platforms.has(platform)) {
 			return this;
 		}
 
 		const name = `outcoming-${platform.getPlatformName()}-${generateUUID()}`;
 
-		this._platforms.set(platform, name);
+		this.platforms.set(platform, name);
 
 		return this.use({
 			name,
@@ -98,15 +96,15 @@ export class OutcomingMiddleware extends IncomingMiddleware {
 	 *
 	 * @return {this}
 	 */
-	removePlatform (platform) {
-		if (this._platforms.has(platform)) {
+	removePlatform(platform) {
+		if (this.platforms.has(platform)) {
 			return this;
 		}
 
-		const name = this._platforms.get(platform);
-		this._platforms.delete(platform);
+		const name = this.platforms.get(platform);
+		this.platforms.delete(platform);
 
-		this._stack = this._stack.filter((middleware) => (
+		this.stack = this.stack.filter(middleware => (
 			middleware.name !== name
 		));
 
@@ -116,7 +114,7 @@ export class OutcomingMiddleware extends IncomingMiddleware {
 	/**
 	 * @inheritdoc
 	 */
-	getSchemaUse () {
+	getSchemaUse() {
 		return schemaUseOutcoming;
 	}
 }

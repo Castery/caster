@@ -1,12 +1,9 @@
-'use strict';
-
-import Promise from 'bluebird';
 import Joi, { validate as JoiValidate } from 'joi';
 
 import { inspect } from 'util';
 
+import Middleware from '../middleware';
 import { prioritySort } from './helpers';
-import { Middleware } from '../middleware';
 import { MIDDLEWARE_PRIORITY as PRIORITY } from '../util/constants';
 
 export const schemaUseIncoming = Joi.object().keys({
@@ -23,14 +20,14 @@ export const schemaUseIncoming = Joi.object().keys({
  *
  * @public
  */
-export class IncomingMiddleware {
+export default class IncomingMiddleware {
 	/**
 	 * Constructor
 	 */
-	constructor () {
-		this._stack = [];
+	constructor() {
+		this.stack = [];
 
-		this._middleware = new Middleware;
+		this.middleware = new Middleware();
 	}
 
 	/**
@@ -38,7 +35,7 @@ export class IncomingMiddleware {
 	 *
 	 * @return {JoiSchemaObject}
 	 */
-	getSchemaUse () {
+	getSchemaUse() {
 		return schemaUseIncoming;
 	}
 
@@ -47,7 +44,7 @@ export class IncomingMiddleware {
 	 *
 	 * @param {Object} middlewareRaw
 	 */
-	use (middlewareRaw) {
+	use(middlewareRaw) {
 		const { error, value: middleware } = JoiValidate(
 			middlewareRaw,
 			this.getSchemaUse()
@@ -59,11 +56,11 @@ export class IncomingMiddleware {
 
 		const { name: middlewareName } = middleware;
 
-		if (this._stack.some(({ name }) => middlewareName === name)) {
+		if (this.stack.some(({ name }) => middlewareName === name)) {
 			throw new Error('Another middleware with the same name has already been registered');
 		}
 
-		this._stack.push(middleware);
+		this.stack.push(middleware);
 
 		if (middleware.enabled) {
 			/* Resorting  with the new middleware */
@@ -80,7 +77,7 @@ export class IncomingMiddleware {
 	 *
 	 * @return {Promise<boolean>}
 	 */
-	dispatch (contextRaw) {
+	dispatch(contextRaw) {
 		const { error, value: context } = JoiValidate(
 			contextRaw,
 			contextRaw.getSchema()
@@ -90,7 +87,7 @@ export class IncomingMiddleware {
 			return Promise.reject(error);
 		}
 
-		return this._middleware.run(context);
+		return this.middleware.run(context);
 	}
 
 	/**
@@ -100,8 +97,8 @@ export class IncomingMiddleware {
 	 *
 	 * @return {this}
 	 */
-	forEach (fn) {
-		this._stack.forEach(fn);
+	forEach(fn) {
+		this.stack.forEach(fn);
 
 		return this.reload();
 	}
@@ -113,8 +110,8 @@ export class IncomingMiddleware {
 	 *
 	 * @return {this}
 	 */
-	filter (fn) {
-		this._stack = this._stack.filter(fn);
+	filter(fn) {
+		this.stack = this.stack.filter(fn);
 
 		return this.reload();
 	}
@@ -126,8 +123,8 @@ export class IncomingMiddleware {
 	 *
 	 * @return {this}
 	 */
-	sort (fn = prioritySort) {
-		this._stack.sort(fn);
+	sort(fn = prioritySort) {
+		this.stack.sort(fn);
 
 		return this.reload();
 	}
@@ -139,8 +136,8 @@ export class IncomingMiddleware {
 	 *
 	 * @return {?Object}
 	 */
-	find (fn) {
-		return this._stack.find(fn) || null;
+	find(fn) {
+		return this.stack.find(fn) || null;
 	}
 
 	/**
@@ -148,16 +145,16 @@ export class IncomingMiddleware {
 	 *
 	 * @return {this}
 	 */
-	reload () {
-		const middlewares = this._stack
-		.filter((middleware) => (
-			middleware.enabled
-		))
-		.map((middleware) => (
-			middleware.handler
-		));
+	reload() {
+		const middlewares = this.stack
+			.filter(middleware => (
+				middleware.enabled
+			))
+			.map(middleware => (
+				middleware.handler
+			));
 
-		this._middleware = new Middleware(middlewares);
+		this.middleware = new Middleware(middlewares);
 
 		return this;
 	}
@@ -167,7 +164,7 @@ export class IncomingMiddleware {
 	 *
 	 * @return {string}
 	 */
-	inspect (depth, options) {
-		return `${this.constructor.name} { ${inspect(this._stack, options)} }`;
+	[inspect.custom](depth, options) {
+		return `${this.constructor.name} { ${inspect(this.stack, options)} }`;
 	}
 }

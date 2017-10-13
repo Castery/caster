@@ -1,5 +1,3 @@
-'use strict';
-
 import Joi, { validate as joiValidate } from 'joi';
 
 import Events from 'events';
@@ -13,18 +11,18 @@ const defaultOptionsSchema = Joi.object().keys({
  *
  * @public
  */
-export class Platform extends Events {
+export default class Platform extends Events {
 	/**
 	 * Constructor
 	 *
 	 * @param {Object} options
 	 */
-	constructor () {
+	constructor(options) {
 		super();
 
 		this.options = {};
 
-		this._isStarted = false;
+		this.started = false;
 	}
 
 	/**
@@ -34,7 +32,7 @@ export class Platform extends Events {
 	 *
 	 * @return {this}
 	 */
-	setOptions (options) {
+	setOptions(options) {
 		const { error, value } = joiValidate(
 			options,
 			this.getOptionsSchema()
@@ -54,7 +52,7 @@ export class Platform extends Events {
 	 *
 	 * @return {Object}
 	 */
-	getOptions () {
+	getOptions() {
 		return this.options;
 	}
 
@@ -63,7 +61,7 @@ export class Platform extends Events {
 	 *
 	 * @return {Object}
 	 */
-	getOptionsSchema () {
+	getOptionsSchema() {
 		return defaultOptionsSchema;
 	}
 
@@ -72,7 +70,7 @@ export class Platform extends Events {
 	 *
 	 * @return {Object}
 	 */
-	getAdapter () {
+	getAdapter() {
 		return null;
 	}
 
@@ -81,26 +79,26 @@ export class Platform extends Events {
 	 *
 	 * @return {boolean}
 	 */
-	isStarted () {
-		return this._isStarted;
+	isStarted() {
+		return this.started;
 	}
 
 	/**
 	 * Running the platform
 	 *
-	 * @return {Promise<void>}
+	 * @return {Promise}
 	 */
-	async start () {
-		return;
+	async start() {
+		//
 	}
 
 	/**
 	 * Stops the platform
 	 *
-	 * @return {Promise<void>}
+	 * @return {Promise}
 	 */
-	async stop () {
-		return;
+	async stop() {
+		//
 	}
 
 	/**
@@ -108,10 +106,10 @@ export class Platform extends Events {
 	 *
 	 * @param {Caster} caster
 	 *
-	 * @return {Promise<void>}
+	 * @return {Promise}
 	 */
-	async subscribe (caster) {
-		return;
+	async subscribe(caster) {
+		//
 	}
 
 	/**
@@ -119,9 +117,9 @@ export class Platform extends Events {
 	 *
 	 * @param {Caster} caster
 	 *
-	 * @return {Promise<void>}
+	 * @return {Promise}
 	 */
-	async unsubscribe (caster) {
-		return;
+	async unsubscribe(caster) {
+		//
 	}
 }

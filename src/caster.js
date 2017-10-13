@@ -1,14 +1,10 @@
-'use strict';
-
-import Promise from 'bluebird';
-
 import createDebug from 'debug';
 import { validate as joiValidate } from 'joi';
 
-import { Platform } from './platform';
-import { Hears } from './middlewares/hears';
-import { IncomingMiddleware } from './middlewares/incoming';
-import { OutcomingMiddleware } from './middlewares/outcoming';
+import Platform from './platform';
+import Hears from './middlewares/hears';
+import IncomingMiddleware from './middlewares/incoming';
+import OutcomingMiddleware from './middlewares/outcoming';
 
 import {
 	defaultOptions,
@@ -23,21 +19,21 @@ const debug = createDebug('caster');
  *
  * @public
  */
-export class Caster {
+export default class Caster {
 	/**
 	 * Constructor
 	 *
 	 * @param {Object} options
 	 */
-	constructor (options = {}) {
-		this.options = Object.assign({}, defaultOptions);
+	constructor(options = {}) {
+		this.options = { ...defaultOptions };
 
-		this._isStarted = false;
-		this._hears = new Hears;
-		this._platforms = new Set;
+		this.started = false;
+		this.hears = new Hears();
+		this.platforms = new Set();
 
-		this.incoming = new IncomingMiddleware;
-		this.outcoming = new OutcomingMiddleware;
+		this.incoming = new IncomingMiddleware();
+		this.outcoming = new OutcomingMiddleware();
 
 		this.setOptions(options);
 
@@ -45,7 +41,7 @@ export class Caster {
 		this.incoming.use({
 			name: 'hear',
 			priority: PRIORITY.HEAR,
-			handler: this._hears.getMiddleware(),
+			handler: this.hears.getMiddleware(),
 			description: 'The built-in hear convenience middleware'
 		});
 	}
@@ -57,7 +53,7 @@ export class Caster {
 	 *
 	 * @return {this}
 	 */
-	setOptions (options) {
+	setOptions(options) {
 		const { error, value } = joiValidate(
 			options,
 			defaultOptionsSchema
@@ -77,56 +73,54 @@ export class Caster {
 	 *
 	 * @return {boolean}
 	 */
-	isStarted () {
-		return this._isStarted;
+	isStarted() {
+		return this.started;
 	}
 
 	/**
 	 * Running the bot
 	 *
-	 * @return {Promise<void>}
+	 * @return {Promise}
 	 */
-	async start () {
+	async start() {
 		if (this.isStarted()) {
-			return void debug('Bot already started');
+			debug('Bot already started');
+
+			return;
 		}
 
-		this._isStarted = true;
+		this.started = true;
 
-		for (const platform of this._platforms) {
+		for (const platform of this.platforms) {
 			try {
 				await platform.subscribe(this);
 			} catch (error) {
-				/* TODO: Add actions on stop error */
-				console.log(error);
+				throw error;
 			}
 		}
-
-		return;
 	}
 
 	/**
 	 * Stops the bot
 	 *
-	 * @return {Promise<void>}
+	 * @return {Promise}
 	 */
-	async stop () {
+	async stop() {
 		if (!this.isStarted()) {
-			return void debug('Bot already stopped!');
+			debug('Bot already stopped!');
+
+			return;
 		}
 
-		this._isStarted = false;
+		this.started = false;
 
-		for (const platform of this._platforms) {
+		for (const platform of this.platforms) {
 			try {
 				await platform.unsubscribe(this);
 			} catch (error) {
-				/* TODO: Add actions on stop error */
-				console.log(error);
+				throw error;
 			}
 		}
-
-		return;
 	}
 
 	/**
@@ -137,8 +131,8 @@ export class Caster {
 	 *
 	 * @return {this}
 	 */
-	hear (conditions, handler) {
-		this._hears.use(conditions, handler);
+	hear(conditions, handler) {
+		this.hears.use(conditions, handler);
 
 		return this;
 	}
@@ -148,8 +142,8 @@ export class Caster {
 	 *
 	 * @param {Platform} platform
 	 */
-	addPlatform (platform) {
-		this._platforms.add(platform);
+	addPlatform(platform) {
+		this.platforms.add(platform);
 	}
 
 	/**
@@ -157,8 +151,8 @@ export class Caster {
 	 *
 	 * @param {Platform} platform
 	 */
-	removePlatform () {
-		this._platforms.delete(platform);
+	removePlatform(platform) {
+		this.platforms.delete(platform);
 	}
 
 	/**
@@ -167,16 +161,22 @@ export class Caster {
 	 * @param {Object} Proto
 	 * @param {Object} options
 	 */
-	use (Proto, options = {}) {
+	use(Proto, options = {}) {
 		/* Hack to dev */
 		if ('start' in Proto && 'getPlatformName' in Proto) {
-			return void this.addPlatform(Proto);
+			this.addPlatform(Proto);
+
+			return;
 		}
 
 		if (Proto instanceof Platform) {
-			return void this.addPlatform(Proto);
+			this.addPlatform(Proto);
+
+			return;
 		} else if (Proto.prototype instanceof Platform) {
-			return void this.addPlatform(new Proto(options));
+			this.addPlatform(new Proto(options));
+
+			return;
 		}
 
 		if ('name' in Proto && 'handler' in Proto) {
@@ -193,15 +193,10 @@ export class Caster {
 	 *
 	 * @param  {IncomingContext} context
 	 *
-	 * @return {Promise<boolean>}
+	 * @return {Promise<Object>}
 	 */
-	dispatchIncoming (context) {
-		return this.incoming.dispatch(context)
-		.catch((error) => {
-			console.error(error);
-
-			throw error;
-		});
+	dispatchIncoming(context) {
+		return this.incoming.dispatch(context);
 	}
 
 	/**
@@ -209,14 +204,9 @@ export class Caster {
 	 *
 	 * @param  {IncomingContext} context
 	 *
-	 * @return {Promise<boolean>}
+	 * @return {Promise<Object>}
 	 */
-	dispatchOutcoming (context) {
-		return this.outcoming.dispatch(context)
-		.catch((error) => {
-			console.error(error);
-
-			throw error;
-		});
+	dispatchOutcoming(context) {
+		return this.outcoming.dispatch(context);
 	}
 }

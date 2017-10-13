@@ -1,5 +1,3 @@
-'use strict';
-
 import Joi from 'joi';
 
 export const contextSchema = Joi.object().unknown().keys({
@@ -11,13 +9,13 @@ export const contextSchema = Joi.object().unknown().keys({
  *
  * @public
  */
-export class Context {
+export default class Context {
 	/**
 	 * Constructor
 	 *
 	 * @param {Caster} caster
 	 */
-	constructor (caster) {
+	constructor(caster) {
 		this.caster = caster;
 	}
 
@@ -26,7 +24,7 @@ export class Context {
 	 *
 	 * @return {Caster}
 	 */
-	getCaster () {
+	getCaster() {
 		return this.caster;
 	}
 
@@ -35,7 +33,7 @@ export class Context {
 	 *
 	 * @return {JoiSchemaObject}
 	 */
-	getSchema () {
+	getSchema() {
 		return contextSchema;
 	}
 }

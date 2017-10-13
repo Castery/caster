@@ -1,8 +1,6 @@
-'use strict';
-
 import Joi from 'joi';
 
-import { Context, contextSchema } from '../context';
+import Context, { contextSchema } from '../context';
 import { CONTEXT_PROPS, defaultSupportedContextTypes } from '../util/constants';
 
 const { SUPPORTED_CONTEXT_TYPES } = CONTEXT_PROPS;
@@ -35,7 +33,7 @@ export class IncomingContext extends Context {
 	/**
 	 * @inheritdoc
 	 */
-	constructor (caster) {
+	constructor(caster) {
 		super(caster);
 
 		this.type = 'incoming';
@@ -48,7 +46,7 @@ export class IncomingContext extends Context {
 	 *
 	 * @return {Object}
 	 */
-	static defaultSupportedContextTypes (types) {
+	static defaultSupportedContextTypes(types) {
 		return {
 			...defaultSupportedContextTypes,
 			...types
@@ -62,10 +60,10 @@ export class IncomingContext extends Context {
 	 *
 	 * @return {?boolean}
 	 */
-	hasSupportedType (name) {
+	hasSupportedType(name) {
 		const types = this[SUPPORTED_CONTEXT_TYPES];
 
-		if (!Boolean(types) || !(name in types)) {
+		if (!types || !(name in types)) {
 			return null;
 		}
 
@@ -75,7 +73,7 @@ export class IncomingContext extends Context {
 	/**
 	 * @inheritdoc
 	 */
-	getSchema () {
+	getSchema() {
 		return incomingSchema;
 	}
 
@@ -84,7 +82,7 @@ export class IncomingContext extends Context {
 	 *
 	 * @return {string}
 	 */
-	getType () {
+	getType() {
 		return this.type;
 	}
 
@@ -93,7 +91,7 @@ export class IncomingContext extends Context {
 	 *
 	 * @return {mixed}
 	 */
-	getPlatformId () {
+	getPlatformId() {
 		return this.platform.id;
 	}
 
@@ -102,7 +100,7 @@ export class IncomingContext extends Context {
 	 *
 	 * @return {string}
 	 */
-	getPlatformName () {
+	getPlatformName() {
 		return this.platform.name;
 	}
 
@@ -111,7 +109,7 @@ export class IncomingContext extends Context {
 	 *
 	 * @return {?Object}
 	 */
-	getRaw () {
+	getRaw() {
 		return this.raw;
 	}
 }

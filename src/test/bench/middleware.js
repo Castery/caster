@@ -1,11 +1,9 @@
-'use strict';
-
-import { Middleware } from '../../middleware';
+import Middleware from '../../middleware';
 
 suite('middleware', () => {
 	set('iterations', 10000);
 
-	const middleware = new Middleware;
+	const middleware = new Middleware();
 
 	middleware.use([
 		async (ctx, next) => await next(),
@@ -13,11 +11,7 @@ suite('middleware', () => {
 		async (ctx, next) => await next()
 	]);
 
-	bench('max calls', (done) => (
-		middleware.run({}).then(done, (error) => {
-			console.log('Error', error);
-
-			done();
-		})
+	bench('max calls', done => (
+		middleware.run({}).then(done)
 	));
 });

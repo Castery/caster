@@ -51,28 +51,28 @@ platform.isStarted(); // => boolean
 Running the platform
 
 ```js
-platform.start(); // => Promise<void>
+platform.start(); // => Promise
 ```
 
 ### stop
 Stops the platform
 
 ```js
-platform.stop(); // => Promise<void>
+platform.stop(); // => Promise
 ```
 
 ### subscribe
 Subscribe caster for platform events
 
 ```js
-platform.subscribe(caster); // => Promise<void>
+platform.subscribe(caster); // => Promise
 ```
 
 ### unsubscribe
 Unsubscribe caster for platform events
 
 ```js
-platform.unsubscribe(caster); // => Promise<void>
+platform.unsubscribe(caster); // => Promise
 ```
 
 ### getAdapter

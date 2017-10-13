@@ -1,5 +1,3 @@
-'use strict';
-
 import Joi from 'joi';
 
 import { inspect } from 'util';
@@ -25,7 +23,7 @@ export class MessageContext extends IncomingContext {
 	/**
 	 * @inheritdoc
 	 */
-	constructor (caster) {
+	constructor(caster) {
 		super(caster);
 
 		this.type = 'message';
@@ -39,7 +37,7 @@ export class MessageContext extends IncomingContext {
 	 *
 	 * @return {Object}
 	 */
-	static defaultSupportedAttachmentTypes (types) {
+	static defaultSupportedAttachmentTypes(types) {
 		return {
 			...defaultSupportedAttachmentTypes,
 			...types
@@ -53,10 +51,10 @@ export class MessageContext extends IncomingContext {
 	 *
 	 * @return {?boolean}
 	 */
-	hasSupportedAttachment (name) {
+	hasSupportedAttachment(name) {
 		const types = this[SUPPORTED_ATTACHMENT_TYPES];
 
-		if (!Boolean(types) || !(name in types)) {
+		if (!types || !(name in types)) {
 			return null;
 		}
 
@@ -68,7 +66,7 @@ export class MessageContext extends IncomingContext {
 	 *
 	 * @return {string}
 	 */
-	getText () {
+	getText() {
 		return this.text;
 	}
 
@@ -77,7 +75,7 @@ export class MessageContext extends IncomingContext {
 	 *
 	 * @return {string}
 	 */
-	inspect (depth, options) {
+	[inspect.custom](depth, options) {
 		const out = {};
 
 		for (const key of Object.keys(this)) {
@@ -95,6 +93,6 @@ export class MessageContext extends IncomingContext {
 			out.raw = '<raw event>';
 		}
 
-		return this.constructor.name + ' ' + inspect(out, options);
+		return `${this.constructor.name} ${inspect(out, options)}`;
 	}
 }

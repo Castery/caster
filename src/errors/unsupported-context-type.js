@@ -1,5 +1,3 @@
-'use strict';
-
 import CasterError from './caster';
 
 /**
@@ -8,7 +6,9 @@ import CasterError from './caster';
  * @public
  */
 export default class UnsupportedContextType extends CasterError {
-	constructor ({ type }) {
-		super(`Unsupported context type "${type}"`);
+	constructor({ type }) {
+		super({
+			message: `Unsupported context type "${type}"`
+		});
 	}
 }

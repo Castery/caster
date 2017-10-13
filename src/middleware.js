@@ -1,7 +1,3 @@
-'use strict';
-
-import Promise from 'bluebird';
-
 import { inspect } from 'util';
 
 /**
@@ -9,22 +5,26 @@ import { inspect } from 'util';
  *
  * @public
  */
-export class Middleware {
+export default class Middleware {
 	/**
 	 * Constructor
+	 *
+	 * @param {Array} middlewares
 	 */
-	constructor (...middlewares) {
-		this._stack = [];
+	constructor(...middlewares) {
+		this.stack = [];
 
 		this.use(middlewares);
 	}
 
 	/**
-	 * Add middlewares
+	 * Adds middlewares
 	 *
 	 * @param {Array} middlewares
+	 *
+	 * @return {this}
 	 */
-	use (...middlewares) {
+	use(...middlewares) {
 		for (const middleware of middlewares) {
 			if (Array.isArray(middleware)) {
 				this.use(...middleware);
@@ -36,8 +36,10 @@ export class Middleware {
 				throw new TypeError('Middleware must be composed of functions!');
 			}
 
-			this._stack.push(middleware);
+			this.stack.push(middleware);
 		}
+
+		return this;
 	}
 
 	/**
@@ -47,12 +49,12 @@ export class Middleware {
 	 *
 	 * @return {Promise<boolean>}
 	 */
-	run (...args) {
-		const middlewares = this._stack;
+	run(...args) {
+		const { stack } = this;
 
 		let index = -1;
 		const status = {
-			isFinished: true,
+			finished: true,
 			contexts: args
 		};
 
@@ -63,15 +65,15 @@ export class Middleware {
 
 			index = i;
 
-			if (!(i in middlewares)) {
-				status.isFinished = true;
+			if (!(i in stack)) {
+				status.finished = true;
 
 				return status;
 			}
 
-			await middlewares[i](...args, () => next(i + 1));
+			await stack[i](...args, () => next(i + 1));
 
-			status.isFinished = middlewares.length <= index;
+			status.finished = stack.length <= index;
 
 			return status;
 		};
@@ -80,11 +82,16 @@ export class Middleware {
 	}
 
 	/**
-	 * Custom output to the console
+	 * Custom inspect object
+	 *
+	 * @param {?number} depth
+	 * @param {Object}  options
 	 *
 	 * @return {string}
 	 */
-	inspect (depth, options) {
-		return `${this.constructor.name} { ${inspect(this._stack, options)} }`;
+	[inspect.custom](depth, options) {
+		const { name } = this.constructor;
+
+		return `${options.stylize(name, 'special')} { ${inspect(this.stack, options)} }`;
 	}
 }

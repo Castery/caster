@@ -1,6 +1,4 @@
-'use strict';
-
-import { Middleware } from '../middleware';
+import Middleware from '../middleware';
 import { getObjectPath } from './helpers';
 
 /**
@@ -8,12 +6,12 @@ import { getObjectPath } from './helpers';
  *
  * @public
  */
-export class Hears {
+export default class Hears {
 	/**
 	 * Constructor
 	 */
-	constructor () {
-		this._middleware = new Middleware;
+	constructor() {
+		this.middleware = new Middleware();
 	}
 
 	/**
@@ -24,14 +22,14 @@ export class Hears {
 	 *
 	 * @return {this}
 	 */
-	use (conditions, handler) {
+	use(conditions, handler) {
 		if (typeof conditions !== 'object' || conditions instanceof RegExp || Array.isArray(conditions)) {
 			conditions = { text: conditions };
 		}
 
 		const keys = Object.keys(conditions);
 
-		this._middleware.use(async (context, next) => {
+		this.middleware.use(async (context, next) => {
 			const result = keys.every((key) => {
 				const condition = conditions[key];
 				const value = getObjectPath(context, key);
@@ -46,13 +44,13 @@ export class Hears {
 
 				if (Array.isArray(condition)) {
 					if (!Array.isArray(value)) {
-						return condition.some((cond) => (
+						return condition.some(cond => (
 							cond === value
 						));
 					}
 
-					return condition.every((cond) => (
-						value.some((val) => (
+					return condition.every(cond => (
+						value.some(val => (
 							cond === val
 						))
 					));
@@ -63,7 +61,9 @@ export class Hears {
 
 			if (result) {
 				if (handler.length === 2) {
-					return await handler(context, next);
+					await handler(context, next);
+
+					return;
 				}
 
 				await handler(context);
@@ -80,9 +80,9 @@ export class Hears {
 	 *
 	 * @return {Function}
 	 */
-	getMiddleware () {
+	getMiddleware() {
 		return async (context, next) => {
-			if (await this._middleware.run(context).isFinished) {
+			if (await this.middleware.run(context).finished) {
 				await next();
 			}
 		};

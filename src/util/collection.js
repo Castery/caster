@@ -1,21 +1,21 @@
-'use strict';
+import { sortOrder } from './helpers';
 
 /**
  * A Map with additional utility methods
  *
  * @public
  */
-export class Collection extends Map {
+export default class Collection extends Map {
 	/**
 	 * Constructor
 	 *
 	 * @param {Iterable} iterable
 	 */
-	constructor (iterable) {
+	constructor(iterable) {
 		super(iterable);
 
-		this._values = null;
-		this._keys = null;
+		this.cacheValues = null;
+		this.cacheKeys = null;
 	}
 
 	/**
@@ -23,7 +23,7 @@ export class Collection extends Map {
 	 *
 	 * @return {Collection}
 	 */
-	clone () {
+	clone() {
 		return new Collection(this);
 	}
 
@@ -35,9 +35,9 @@ export class Collection extends Map {
 	 *
 	 * @return {this}
 	 */
-	set (key, value) {
-		this._values = null;
-		this._keys = null;
+	set(key, value) {
+		this.cacheValues = null;
+		this.cacheKeys = null;
 
 		return super.set(key, value);
 	}
@@ -49,9 +49,9 @@ export class Collection extends Map {
 	 *
 	 * @return {boolean}
 	 */
-	delete (key) {
-		this._values = null;
-		this._keys = null;
+	delete(key) {
+		this.cacheValues = null;
+		this.cacheKeys = null;
 
 		return super.delete(key);
 	}
@@ -61,7 +61,7 @@ export class Collection extends Map {
 	 *
 	 * @return {mixed}
 	 */
-	first () {
+	first() {
 		return this.values().next().value;
 	}
 
@@ -70,7 +70,7 @@ export class Collection extends Map {
 	 *
 	 * @return {mixed}
 	 */
-	firstKey () {
+	firstKey() {
 		return this.keys().next().value;
 	}
 
@@ -79,8 +79,8 @@ export class Collection extends Map {
 	 *
 	 * @return {mixed}
 	 */
-	last () {
-		const values = this._valuesArray();
+	last() {
+		const values = this.cacheValuesArray();
 
 		return values[values.length - 1];
 	}
@@ -90,8 +90,8 @@ export class Collection extends Map {
 	 *
 	 * @return {mixed}
 	 */
-	lastKey () {
-		const keys = this._keysArray();
+	lastKey() {
+		const keys = this.cacheKeysArray();
 
 		return keys[keys.length - 1];
 	}
@@ -101,8 +101,8 @@ export class Collection extends Map {
 	 *
 	 * @return {mixed}
 	 */
-	random () {
-		const values = this._valuesArray();
+	random() {
+		const values = this.cacheValuesArray();
 
 		return values[
 			Math.floor(Math.random() * values.length)
@@ -114,8 +114,8 @@ export class Collection extends Map {
 	 *
 	 * @return {mixed}
 	 */
-	randomKey () {
-		const keys = this._keysArray();
+	randomKey() {
+		const keys = this.cacheKeysArray();
 
 		return keys[
 			Math.floor(Math.random() * keys.length)
@@ -131,7 +131,7 @@ export class Collection extends Map {
 	 *
 	 * @return {Array}
 	 */
-	findAll (prop, value) {
+	findAll(prop, value) {
 		const results = [];
 
 		for (const item of this.values()) {
@@ -152,7 +152,7 @@ export class Collection extends Map {
 	 *
 	 * @return {mixed}
 	 */
-	find (propOrFn, value) {
+	find(propOrFn, value) {
 		if (typeof propOrFn === 'function') {
 			for (const [key, val] of this) {
 				if (propOrFn(val, key, this)) {
@@ -185,7 +185,7 @@ export class Collection extends Map {
 	 *
 	 * @return {mixed}
 	 */
-	findKey (propOrFn, value) {
+	findKey(propOrFn, value) {
 		if (typeof propOrFn === 'function') {
 			for (const [key, val] of this) {
 				if (propOrFn(val, key, this)) {
@@ -218,7 +218,7 @@ export class Collection extends Map {
 	 *
 	 * @return {boolean}
 	 */
-	exists (prop, value) {
+	exists(prop, value) {
 		return Boolean(this.find(prop, value));
 	}
 
@@ -230,11 +230,11 @@ export class Collection extends Map {
 	 *
 	 * @return {Collection}
 	 */
-	filter (fn) {
-		const results = new Collection;
+	filter(fn) {
+		const results = new Collection();
 
 		for (const [key, value] of this) {
-			if (fn(val, key, this)) {
+			if (fn(value, key, this)) {
 				results.set(key, value);
 			}
 		}
@@ -248,13 +248,15 @@ export class Collection extends Map {
 	 *
 	 * @return {[type]} [description]
 	 */
-	map (fn) {
+	map(fn) {
 		const arr = new Array(this.size);
 
 		let i = -1;
 
 		for (const [key, value] of this) {
-			arr[++i] = fn(value, key, this);
+			i += 1;
+
+			arr[i] = fn(value, key, this);
 		}
 
 		return arr;
@@ -268,7 +270,7 @@ export class Collection extends Map {
 	 *
 	 * @return {boolean}
 	 */
-	some (fn) {
+	some(fn) {
 		for (const [key, value] of this) {
 			if (fn(value, key, this)) {
 				return true;
@@ -286,7 +288,7 @@ export class Collection extends Map {
 	 *
 	 * @return {boolean}
 	 */
-	every () {
+	every(fn) {
 		for (const [key, value] of this) {
 			if (!fn(value, key, this)) {
 				return true;
@@ -305,7 +307,7 @@ export class Collection extends Map {
 	 *
 	 * @return {mixed}
 	 */
-	reduce (fn, accumulator) {
+	reduce(fn, accumulator) {
 		if (typeof accumulator !== 'undefined') {
 			for (const [key, value] of this) {
 				accumulator = fn(accumulator, value, key, this);
@@ -335,7 +337,7 @@ export class Collection extends Map {
 	 *
 	 * @return {Collection}
 	 */
-	concat (...collections) {
+	concat(...collections) {
 		const clone = this.clone();
 
 		for (const collection of collections) {
@@ -354,7 +356,7 @@ export class Collection extends Map {
 	 *
 	 * @return {boolean}
 	 */
-	equals (collection) {
+	equals(collection) {
 		if (!collection) {
 			return false;
 		}
@@ -379,13 +381,11 @@ export class Collection extends Map {
 	 *
 	 * @return {Collection}
 	 */
-	sort (compare = sortOrder) {
-		return new Collection(
-			Array.from(this.entries())
+	sort(compare = sortOrder) {
+		return new Collection(Array.from(this.entries())
 			.sort((a, b) => (
 				compare(a[1], b[1], a[0], b[0])
-			))
-		);
+			)));
 	}
 
 	/**
@@ -393,12 +393,12 @@ export class Collection extends Map {
 	 *
 	 * @return {Array}
 	 */
-	_valuesArray () {
-		if (this._values === null || this._values.length !== this.size) {
-			this._values = Array.from(this.values());
+	_valuesArray() {
+		if (this.cacheValues === null || this.cacheValues.length !== this.size) {
+			this.cacheValues = Array.from(this.values());
 		}
 
-		return this._values;
+		return this.cacheValues;
 	}
 
 	/**
@@ -406,20 +406,11 @@ export class Collection extends Map {
 	 *
 	 * @return {Array}
 	 */
-	_keysArray () {
-		if (this._keys === null || this._keys.length !== this.size) {
-			this._keys = Array.from(this.keys());
+	_keysArray() {
+		if (this.cacheKeys === null || this.cacheKeys.length !== this.size) {
+			this.cacheKeys = Array.from(this.keys());
 		}
 
-		return this._keys;
+		return this.cacheKeys;
 	}
-}
-
-/**
- * Specifies the sort order
- *
- * @return {number}
- */
-function sortOrder(a, b) {
-	return +(a > b) || +(a === b) - 1;
 }
