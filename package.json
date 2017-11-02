@@ -8,7 +8,7 @@
     },
     "scripts": {
         "lint": "eslint ./src",
-        "test": "mocha lib/test",
+        "test": "mocha lib/tests",
         "build": "npm run-script babel",
         "babel": "babel ./src/ --out-dir ./lib/",
         "watch": "npm run-script babel -- --watch",
