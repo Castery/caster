@@ -9,9 +9,10 @@ export default class CasterError extends Error {
 	 *
 	 * @param {Object} payload
 	 */
-	constructor({ message }) {
+	constructor({ message, code }) {
 		super(message);
 
+		this.code = code;
 		this.message = message;
 		this.name = this.constructor.name;
 

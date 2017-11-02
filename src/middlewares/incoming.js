@@ -1,8 +1,8 @@
+import Middleware from 'middleware-io';
 import Joi, { validate as JoiValidate } from 'joi';
 
 import { inspect } from 'util';
 
-import Middleware from '../middleware';
 import { prioritySort } from './helpers';
 import { MIDDLEWARE_PRIORITY as PRIORITY } from '../util/constants';
 

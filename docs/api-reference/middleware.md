@@ -9,14 +9,14 @@ import { Middleware } from '@castery/caster';
 Initialize new Middleware wrapper
 
 ```js
-new Middleware;
+new Middleware();
 ```
 
 ### use
 Registers a middleware
 
 ```js
-middleware.use(middleware); // => void
+middleware.use(middleware); // => this
 ```
 
 | Param       | Type     | Description         |
@@ -82,7 +82,7 @@ const context = {};
 
 middleware.run(context)
 .then((condition) => {
-	console.log('Passed on all middleware:', condition.isFinished? 'yes': 'no');
+	console.log('Passed on all middleware:', condition.finished? 'yes': 'no');
 	console.log('Context', context);
 })
 ```

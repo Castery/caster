@@ -1,7 +1,8 @@
+import Middleware from 'middleware-io';
+
 import Caster from './caster';
 import Context from './context';
 import Platform from './platform';
-import Middleware from './middleware';
 import Hears from './middlewares/hears';
 import Collection from './util/collection';
 import MessageContext from './contexts/message';
