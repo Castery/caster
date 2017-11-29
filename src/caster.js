@@ -9,7 +9,7 @@ import OutcomingMiddleware from './middlewares/outcoming';
 import {
 	defaultOptions,
 	defaultOptionsSchema,
-	MIDDLEWARE_PRIORITY as PRIORITY
+	middlewarePriority as PRIORITY
 } from './util/constants';
 
 const debug = createDebug('caster');

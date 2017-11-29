@@ -5,10 +5,29 @@ import Joi from 'joi';
  *
  * @type {Object}
  */
-export const MIDDLEWARE_PRIORITY = {
-	HEAR: 20,
+export const middlewarePriority = {
+	BEFORE: -Infinity,
+	AFTER: Infinity,
+
+	BEFORE_BOOTSTRAP: -20,
+	BOOTSTRAP: 15,
+	AFTER_BOOTSTRAP: 10,
+
+	BEFORE_DEFAULT: 5,
 	DEFAULT: 10,
-	PLATFORM: 200
+	AFTER_DEFAULT: 15,
+
+	BEFORE_COMMAND: 20,
+	COMMAND: 25,
+	AFTER_COMMAND: 30,
+
+	BEFORE_HEAR: 35,
+	HEAR: 40,
+	AFTER_HEAR: 45,
+
+	BEFORE_PLATFORM: 195,
+	PLATFORM: 200,
+	AFTER_PLATFORM: 205
 };
 
 /**
@@ -16,7 +35,7 @@ export const MIDDLEWARE_PRIORITY = {
  *
  * @type {Object}
  */
-export const CONTEXT_PROPS = {
+export const contextProps = {
 	SUPPORTED_CONTEXT_TYPES: Symbol('SupportedContextTypes'),
 	SUPPORTED_ATTACHMENT_TYPES: Symbol('SupportedAttachmentTypes')
 };
@@ -48,6 +67,7 @@ export const defaultSupportedContextTypes = {
  */
 export const defaultSupportedAttachmentTypes = {
 	image: false,
+	voice: false,
 	video: false
 };
 

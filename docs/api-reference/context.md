@@ -33,9 +33,10 @@ context.getSchema(); // => JoiSchemaObject
 ## Variables default
 The default define variables
 
-| Option     | Type    | Value  | Description     |
-|------------|---------|--------|-----------------|
-| caster     | Caster  | Caster | Instance Caster |
+| Option | Type   | Value  | Description                                                                                     |
+|--------|--------|--------|-------------------------------------------------------------------------------------------------|
+| caster | Caster | Caster | Instance Caster                                                                                 |
+| state  | Object | {}     | The recommended namespace for passing information through middleware and to your frontend views |
 
 ## Creating your own context
 Simple context

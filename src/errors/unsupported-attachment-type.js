@@ -5,7 +5,7 @@ import CasterError from './caster';
  *
  * @public
  */
-export default class UnsupportedAttachmentType extends CasterError {
+export default class UnsupportedAttachmentTypeError extends CasterError {
 	/**
 	 * Constructor
 	 *

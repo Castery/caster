@@ -8,6 +8,9 @@ import Collection from './util/collection';
 import MessageContext from './contexts/message';
 import IncomingContext from './contexts/incoming';
 
+import IncomingMiddleware from './middlewares/incoming';
+import OutcomingMiddleware from './middlewares/outcoming';
+
 export {
 	Hears,
 	Caster,
@@ -16,10 +19,12 @@ export {
 	Collection,
 	Middleware,
 	MessageContext,
-	IncomingContext
+	IncomingContext,
+	IncomingMiddleware,
+	OutcomingMiddleware
 };
 
 export * from './errors';
-export { MIDDLEWARE_PRIORITY, CONTEXT_PROPS } from './util/constants';
+export { middlewarePriority, contextProps } from './util/constants';
 
 export default Caster;

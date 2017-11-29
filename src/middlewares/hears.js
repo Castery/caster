@@ -1,4 +1,5 @@
 import Middleware from 'middleware-io';
+
 import { getObjectPath } from './helpers';
 
 /**

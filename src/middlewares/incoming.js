@@ -4,14 +4,14 @@ import Joi, { validate as JoiValidate } from 'joi';
 import { inspect } from 'util';
 
 import { prioritySort } from './helpers';
-import { MIDDLEWARE_PRIORITY as PRIORITY } from '../util/constants';
+import { middlewarePriority as priority } from '../util/constants';
 
 export const schemaUseIncoming = Joi.object().keys({
 	name: Joi.string().required(),
 	handler: Joi.func().required(),
 	enabled: Joi.boolean().default(true),
 	type: Joi.string().default('handler'),
-	priority: Joi.number().default(PRIORITY.DEFAULT),
+	priority: Joi.number().default(priority.DEFAULT),
 	description: Joi.string().default('No description')
 });
 
@@ -160,11 +160,16 @@ export default class IncomingMiddleware {
 	}
 
 	/**
-	 * Custom output to the console
+	 * Custom inspect object
+	 *
+	 * @param {?number} depth
+	 * @param {Object}  options
 	 *
 	 * @return {string}
 	 */
 	[inspect.custom](depth, options) {
-		return `${this.constructor.name} { ${inspect(this.stack, options)} }`;
+		const { name } = this.constructor;
+
+		return `${options.stylize(name, 'special')} { ${inspect(this.stack, options)} }`;
 	}
 }

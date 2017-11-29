@@ -1,11 +1,9 @@
 import Joi from 'joi';
 
-import { inspect } from 'util';
+import IncomingContext, { incomingSchema } from './incoming';
+import { contextProps, defaultSupportedAttachmentTypes } from '../util/constants';
 
-import { IncomingContext, incomingSchema } from './incoming';
-import { CONTEXT_PROPS, defaultSupportedAttachmentTypes } from '../util/constants';
-
-const { SUPPORTED_ATTACHMENT_TYPES } = CONTEXT_PROPS;
+const { SUPPORTED_ATTACHMENT_TYPES } = contextProps;
 
 export const messageSchema = incomingSchema.keys({
 	[SUPPORTED_ATTACHMENT_TYPES]: Joi.object(),
@@ -19,7 +17,7 @@ export const messageSchema = incomingSchema.keys({
  *
  * @public
  */
-export class MessageContext extends IncomingContext {
+export default class MessageContext extends IncomingContext {
 	/**
 	 * @inheritdoc
 	 */
@@ -68,31 +66,5 @@ export class MessageContext extends IncomingContext {
 	 */
 	getText() {
 		return this.text;
-	}
-
-	/**
-	 * Hide private property to inspect
-	 *
-	 * @return {string}
-	 */
-	[inspect.custom](depth, options) {
-		const out = {};
-
-		for (const key of Object.keys(this)) {
-			/* Ignores private properties */
-			if (key.startsWith('_')) {
-				continue;
-			}
-
-			out[key] = this[key];
-		}
-
-		delete out.caster;
-
-		if (out.raw !== null) {
-			out.raw = '<raw event>';
-		}
-
-		return `${this.constructor.name} ${inspect(out, options)}`;
 	}
 }

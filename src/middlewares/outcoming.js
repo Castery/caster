@@ -2,7 +2,7 @@ import Joi from 'joi';
 import generateUUID from 'uuid';
 
 import IncomingMiddleware, { schemaUseIncoming } from './incoming';
-import { MIDDLEWARE_PRIORITY as PRIORITY } from '../util/constants';
+import { middlewarePriority as priority } from '../util/constants';
 
 // export const schemaUseOutcoming = schemaUseIncoming.keys({
 // 	//
@@ -85,7 +85,7 @@ export default class OutcomingMiddleware extends IncomingMiddleware {
 			name,
 			handler,
 			type: 'platform',
-			priority: PRIORITY.PLATFORM
+			priority: priority.PLATFORM
 		});
 	}
 

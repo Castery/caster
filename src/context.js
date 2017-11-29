@@ -17,6 +17,8 @@ export default class Context {
 	 */
 	constructor(caster) {
 		this.caster = caster;
+
+		this.state = {};
 	}
 
 	/**

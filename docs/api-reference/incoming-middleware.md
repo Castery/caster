@@ -24,7 +24,7 @@ Middleware parameters
 |-------------|----------|-----------------------------------------|
 | name        | string   | Name middleware (required)              |
 | handler     | function | Handler middleware (required)           |
-| order       | number   | Ranking position among other middleware |
+| priority    | number   | Ranking position among other middleware |
 | enabled     | boolean  | Is enable middleware                    |
 | description | string   | Description middleware                  |
 

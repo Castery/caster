@@ -1,9 +1,11 @@
 import Joi from 'joi';
 
-import Context, { contextSchema } from '../context';
-import { CONTEXT_PROPS, defaultSupportedContextTypes } from '../util/constants';
+import { inspect } from 'util';
 
-const { SUPPORTED_CONTEXT_TYPES } = CONTEXT_PROPS;
+import Context, { contextSchema } from '../context';
+import { contextProps, defaultSupportedContextTypes } from '../util/constants';
+
+const { SUPPORTED_CONTEXT_TYPES } = contextProps;
 
 export const incomingSchema = contextSchema.keys({
 	[SUPPORTED_CONTEXT_TYPES]: Joi.object(),
@@ -29,7 +31,7 @@ export const incomingSchema = contextSchema.keys({
  *
  * @public
  */
-export class IncomingContext extends Context {
+export default class IncomingContext extends Context {
 	/**
 	 * @inheritdoc
 	 */
@@ -111,5 +113,38 @@ export class IncomingContext extends Context {
 	 */
 	getRaw() {
 		return this.raw;
+	}
+
+	/**
+	 * Custom inspect object
+	 *
+	 * @param {?number} depth
+	 * @param {Object}  options
+	 *
+	 * @return {string}
+	 */
+	[inspect.custom](depth, options) {
+		const out = {};
+
+		for (const key of Object.keys(this)) {
+			/* Ignores private properties */
+			if (key.startsWith('_')) {
+				continue;
+			}
+
+			if (key === 'caster') {
+				continue;
+			}
+
+			out[key] = this[key];
+		}
+
+		if (out.raw !== null) {
+			out.raw = '<raw event>';
+		}
+
+		const { name } = this.constructor;
+
+		return `${options.stylize(name, 'special')} ${inspect(out, options)}`;
 	}
 }

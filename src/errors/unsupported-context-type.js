@@ -5,7 +5,7 @@ import CasterError from './caster';
  *
  * @public
  */
-export default class UnsupportedContextType extends CasterError {
+export default class UnsupportedContextTypeError extends CasterError {
 	/**
 	 * Constructor
 	 *
