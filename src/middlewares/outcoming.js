@@ -4,9 +4,6 @@ import generateUUID from 'uuid';
 import IncomingMiddleware, { schemaUseIncoming } from './incoming';
 import { middlewarePriority as priority } from '../util/constants';
 
-// export const schemaUseOutcoming = schemaUseIncoming.keys({
-// 	//
-// });
 export const schemaUseOutcoming = schemaUseIncoming;
 
 /**
