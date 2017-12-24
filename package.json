@@ -1,6 +1,6 @@
 {
     "name": "@castery/caster",
-    "version": "0.0.17",
+    "version": "0.0.18",
     "description": "🤖💬 Universal platform for creating multi bots!",
     "main": "index.js",
     "engines": {
