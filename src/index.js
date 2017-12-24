@@ -4,7 +4,6 @@ import Caster from './caster';
 import Context from './context';
 import Platform from './platform';
 import Hears from './middlewares/hears';
-import Collection from './util/collection';
 import MessageContext from './contexts/message';
 import IncomingContext from './contexts/incoming';
 
@@ -16,7 +15,6 @@ export {
 	Caster,
 	Context,
 	Platform,
-	Collection,
 	Middleware,
 	MessageContext,
 	IncomingContext,
