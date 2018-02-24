@@ -1,58 +1,58 @@
 {
-    "name": "@castery/caster",
-    "version": "0.0.19",
-    "description": "🤖💬 Universal platform for creating multi bots!",
-    "main": "index.js",
-    "engines": {
-        "node": ">=8.0.0"
-    },
-    "files": [
-        "lib"
-    ],
-    "scripts": {
+	"name": "@castery/caster",
+	"version": "0.0.20",
+	"description": "🤖💬 Universal platform for creating multi bots!",
+	"main": "index.js",
+	"engines": {
+		"node": ">=8.0.0"
+	},
+	"files": [
+		"lib"
+	],
+	"scripts": {
 		"lint": "eslint ./src",
-        "lint:fix": "npm run lint -- --fix",
-        "test": "mocha lib/tests",
-        "build": "npm run-script babel",
-        "babel": "babel ./src/ --out-dir ./lib/",
-        "watch": "npm run-script babel -- --watch",
-        "bench": "matcha lib/test/bench/middleware.js",
-        "prepare": "npm run-script babel && npm run-script test"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/castery/caster.git"
-    },
-    "keywords": [
-        "universal",
-        "platform",
-        "caster",
-        "multi",
-        "bot"
-    ],
-    "author": "https://github.com/negezor",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/castery/caster/issues"
-    },
-    "homepage": "https://github.com/castery/caster#readme",
-    "devDependencies": {
-        "@babel/cli": "^7.0.0-beta.40",
-        "@babel/core": "^7.0.0-beta.40",
-        "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.40",
-        "@babel/preset-env": "^7.0.0-beta.40",
-        "chai": "^4.1.2",
-        "eslint": "^4.18.1",
-        "eslint-config-airbnb-base": "^12.1.0",
-        "eslint-plugin-import": "^2.9.0",
-        "matcha": "^0.7.0",
-        "mocha": "^5.0.1"
-    },
-    "dependencies": {
-        "chalk": "^2.3.1",
-        "debug": "^3.1.0",
-        "joi": "^13.1.2",
-        "middleware-io": "^0.0.3",
-        "uuid": "^3.2.1"
-    }
+		"lint:fix": "npm run lint -- --fix",
+		"test": "mocha lib/tests",
+		"build": "npm run-script babel",
+		"babel": "babel ./src/ --out-dir ./lib/",
+		"watch": "npm run-script babel -- --watch",
+		"bench": "matcha lib/test/bench/middleware.js",
+		"prepare": "npm run-script babel && npm run-script test"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/castery/caster.git"
+	},
+	"keywords": [
+		"universal",
+		"platform",
+		"caster",
+		"multi",
+		"bot"
+	],
+	"author": "https://github.com/negezor",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/castery/caster/issues"
+	},
+	"homepage": "https://github.com/castery/caster#readme",
+	"devDependencies": {
+		"@babel/cli": "^7.0.0-beta.40",
+		"@babel/core": "^7.0.0-beta.40",
+		"@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.40",
+		"@babel/preset-env": "^7.0.0-beta.40",
+		"chai": "^4.1.2",
+		"eslint": "^4.18.1",
+		"eslint-config-airbnb-base": "^12.1.0",
+		"eslint-plugin-import": "^2.9.0",
+		"matcha": "^0.7.0",
+		"mocha": "^5.0.1"
+	},
+	"dependencies": {
+		"chalk": "^2.3.1",
+		"debug": "^3.1.0",
+		"joi": "^13.1.2",
+		"middleware-io": "^0.0.3",
+		"uuid": "^3.2.1"
+	}
 }
