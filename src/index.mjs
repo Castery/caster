@@ -24,5 +24,6 @@ export {
 
 export * from './errors';
 export { middlewarePriority, contextProps } from './util/constants';
+export { generateWarningLog, generateRandomID } from './util/helpers';
 
 export default Caster;
