@@ -1,5 +1,5 @@
 import createDebug from 'debug';
-import { validate as joiValidate } from 'joi';
+import * as Joi from 'joi';
 
 import Platform from './platform';
 import Hears from './middlewares/hears';
@@ -8,9 +8,11 @@ import OutcomingMiddleware from './middlewares/outcoming';
 
 import {
 	defaultOptions,
-	defaultOptionsSchema,
-	middlewarePriority as PRIORITY
-} from './util/constants';
+	middlewarePriority,
+	defaultOptionsSchema
+} from './utils/constants';
+
+const { validate: joiValidate } = Joi;
 
 const debug = createDebug('caster');
 
@@ -40,7 +42,7 @@ export default class Caster {
 		/* Register default hear */
 		this.incoming.use({
 			name: 'hear',
-			priority: PRIORITY.HEAR,
+			priority: middlewarePriority.HEAR,
 			handler: this.hears.getMiddleware(),
 			description: 'The built-in hear convenience middleware'
 		});

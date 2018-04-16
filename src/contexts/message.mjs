@@ -1,7 +1,7 @@
-import Joi from 'joi';
+import * as Joi from 'joi';
 
 import IncomingContext, { incomingSchema } from './incoming';
-import { contextProps, defaultSupportedAttachmentTypes } from '../util/constants';
+import { contextProps, defaultSupportedAttachmentTypes } from '../utils/constants';
 
 const { SUPPORTED_ATTACHMENT_TYPES } = contextProps;
 

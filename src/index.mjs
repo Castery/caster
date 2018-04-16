@@ -1,5 +1,3 @@
-import Middleware from 'middleware-io';
-
 import Caster from './caster';
 import Context from './context';
 import Platform from './platform';
@@ -15,7 +13,6 @@ export {
 	Caster,
 	Context,
 	Platform,
-	Middleware,
 	MessageContext,
 	IncomingContext,
 	IncomingMiddleware,
@@ -23,7 +20,7 @@ export {
 };
 
 export * from './errors';
-export { middlewarePriority, contextProps } from './util/constants';
-export { generateWarningLog, generateRandomID } from './util/helpers';
+export { middlewarePriority, contextProps } from './utils/constants';
+export { generateWarningLog, generateRandomUUID } from './utils/helpers';
 
 export default Caster;

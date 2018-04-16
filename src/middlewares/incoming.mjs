@@ -1,10 +1,13 @@
-import Middleware from 'middleware-io';
-import Joi, { validate as JoiValidate } from 'joi';
+import * as Joi from 'joi';
+import Middleware from 'middleware-io/lib/index';
 
-import { inspect } from 'util';
+import nodeUtil from 'util';
 
 import { prioritySort } from './helpers';
-import { middlewarePriority as priority } from '../util/constants';
+import { middlewarePriority as priority } from '../utils/constants';
+
+const { inspect } = nodeUtil;
+const { validate: JoiValidate } = Joi;
 
 export const schemaUseIncoming = Joi.object().keys({
 	name: Joi.string().required(),

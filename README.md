@@ -31,7 +31,7 @@ npm install @castery/caster --save
 ```js
 import { Caster } from '@castery/caster';
 
-const caster = new Caster;
+const caster = new Caster();
 
 /* Add platforms integrations */
 

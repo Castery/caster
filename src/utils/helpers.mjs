@@ -32,4 +32,4 @@ export const generateWarningLog = name => (
  *
  * @type {Function}
  */
-export const generateRandomID = uuid;
+export const generateRandomUUID = uuid;

@@ -1,6 +1,8 @@
-import Joi, { validate as joiValidate } from 'joi';
+import * as Joi from 'joi';
 
 import Events from 'events';
+
+const { validate: joiValidate } = Joi;
 
 const defaultOptionsSchema = Joi.object().keys({
 	adapter: Joi.object()

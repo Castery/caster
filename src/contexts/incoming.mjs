@@ -1,9 +1,11 @@
-import Joi from 'joi';
+import * as Joi from 'joi';
 
-import { inspect } from 'util';
+import nodeUtil from 'util';
 
 import Context, { contextSchema } from '../context';
-import { contextProps, defaultSupportedContextTypes } from '../util/constants';
+import { contextProps, defaultSupportedContextTypes } from '../utils/constants';
+
+const { inspect } = nodeUtil;
 
 const { SUPPORTED_CONTEXT_TYPES } = contextProps;
 

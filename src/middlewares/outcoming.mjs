@@ -1,8 +1,8 @@
-import Joi from 'joi';
-import generateUUID from 'uuid';
+import * as Joi from 'joi';
 
+import { generateRandomUUID } from '../utils/helpers';
 import IncomingMiddleware, { schemaUseIncoming } from './incoming';
-import { middlewarePriority as priority } from '../util/constants';
+import { middlewarePriority as priority } from '../utils/constants';
 
 export const schemaUseOutcoming = schemaUseIncoming;
 
@@ -74,7 +74,7 @@ export default class OutcomingMiddleware extends IncomingMiddleware {
 			return this;
 		}
 
-		const name = `outcoming-${platform.getPlatformName()}-${generateUUID()}`;
+		const name = `outcoming-${platform.getPlatformName()}-${generateRandomUUID()}`;
 
 		this.platforms.set(platform, name);
 

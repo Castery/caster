@@ -1,4 +1,4 @@
-import Middleware from 'middleware-io';
+import Middleware from 'middleware-io/lib/index';
 
 import { getObjectPath } from './helpers';
 
@@ -50,11 +50,7 @@ export default class Hears {
 						));
 					}
 
-					return condition.every(cond => (
-						value.some(val => (
-							cond === val
-						))
-					));
+					return condition.every(cond => value.includes(cond));
 				}
 
 				return condition === value;
@@ -83,7 +79,9 @@ export default class Hears {
 	 */
 	getMiddleware() {
 		return async (context, next) => {
-			if (await this.middleware.run(context).finished) {
+			const { finished } = await this.middleware.run(context);
+
+			if (finished) {
 				await next();
 			}
 		};

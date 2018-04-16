@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import * as Joi from 'joi';
 
 export const contextSchema = Joi.object().unknown().keys({
 	caster: Joi.object().required()
