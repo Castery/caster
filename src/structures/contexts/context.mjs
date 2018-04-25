@@ -22,6 +22,15 @@ export default class Context {
 	}
 
 	/**
+	 * Returns custom tag
+	 *
+	 * @return {string}
+	 */
+	get [Symbol.toStringTag]() {
+		return this.constructor.name;
+	}
+
+	/**
 	 * Returns the Caster instance
 	 *
 	 * @return {Caster}

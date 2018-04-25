@@ -1,12 +1,12 @@
 import * as Joi from 'joi';
 
 import IncomingContext, { incomingSchema } from './incoming';
-import { contextProps, defaultSupportedAttachmentTypes } from '../utils/constants';
+import { contextProps, defaultSupportedAttachmentTypes } from '../../utils/constants';
 
 const { SUPPORTED_ATTACHMENT_TYPES } = contextProps;
 
 export const messageSchema = incomingSchema.keys({
-	[SUPPORTED_ATTACHMENT_TYPES]: Joi.object(),
+	[contextProps.SUPPORTED_ATTACHMENT_TYPES]: Joi.object(),
 
 	attachments: Joi.array().allow(),
 	text: Joi.string().required().allow(null)

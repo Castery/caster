@@ -1,9 +1,6 @@
 import Caster from './caster';
-import Context from './context';
 import Platform from './platform';
 import Hears from './middlewares/hears';
-import MessageContext from './contexts/message';
-import IncomingContext from './contexts/incoming';
 
 import IncomingMiddleware from './middlewares/incoming';
 import OutcomingMiddleware from './middlewares/outcoming';
@@ -11,13 +8,16 @@ import OutcomingMiddleware from './middlewares/outcoming';
 export {
 	Hears,
 	Caster,
-	Context,
 	Platform,
-	MessageContext,
-	IncomingContext,
 	IncomingMiddleware,
 	OutcomingMiddleware
 };
+
+export {
+	Context,
+	MessageContext,
+	IncomingContext
+} from './structures/contexts';
 
 export * from './errors';
 export { middlewarePriority, contextProps } from './utils/constants';
